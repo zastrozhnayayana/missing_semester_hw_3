@@ -3,28 +3,10 @@ services:
     build: .
     environment:
       GREETING: "Hello from docker"
-      STORAGE: redis
-      REDIS_URL: redis://redis:6379/0
     volumes:
       - counter_data:/data
     ports:
       - "8080:8000"
-    
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
-  redis:
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
 
 volumes:
   counter_data:
-  redis_data:
